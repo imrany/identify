@@ -7,9 +7,10 @@ export default function ScanPage(){
     function handleScan(result:any){
         result.forEach((i:any)=>{
             if(i.format.includes("qr_code")){
-                console.log(i.rawValue)
-                if(i.rawValue.registration_number){
-                    authenticate(true,i.rawValue.registration_number)
+                const value=JSON.parse(i.rawValue)
+                console.log(value)
+                if(value.registration_number){
+                    authenticate(true,value.registration_number)
                 }else{
                     let errorMessage=`You are not authorized!`
                     showErrorDialog("Error",errorMessage)
@@ -24,7 +25,7 @@ export default function ScanPage(){
     return(
         <div className="flex flex-col justify-center items-center max-h-screen bg-[var(--primary-01)]">
             <Scanner
-                //allowMultiple={true}
+                allowMultiple={true}
                 classNames={{container:"my-[23vh]"}} 
                 onScan={(result) => handleScan(result)} 
             />
