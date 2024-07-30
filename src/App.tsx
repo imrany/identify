@@ -49,6 +49,7 @@ function App() {
             if (parseRes.error) {
                 console.log(parseRes.error)
                 setIsScanned(false);
+                showErrorDialog("Error",parseRes.error)
             } else {
                 const userDetails = {
                     type:parseRes.data.type,
