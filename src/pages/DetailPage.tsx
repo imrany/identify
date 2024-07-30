@@ -1,7 +1,7 @@
-export default function LandingPage(){
+export default function DetailPage(){
     return(
         <div className="text-[var(--primary-02)] bg-[var(--primary-01)] h-screen">
-            <p>Landing page</p>
+            <p>Detail page</p>
         </div>
     )
 }

@@ -6,7 +6,7 @@ export default function InLogo(){
             <div className="p-[2px] border-[var(--button-bg-01)] border-dashed border-[1px]">
                 <img src={QRCode} alt="QR code" width={40} height={10}/>
             </div>
-            <p>Qr pay</p>
+            <p>Identify</p>
         </div>
     )
 }

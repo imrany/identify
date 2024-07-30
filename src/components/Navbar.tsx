@@ -9,7 +9,7 @@ export default function Navbar(){
                     <div className="p-[2px] border-[var(--primary-01)] border-dashed border-[1px]">
                         <img src={QRCode} alt="QR code" width={30} height={10}/>
                     </div>
-                    <p className="text-[var(--primary-01)]">Qr pay</p>
+                    <p className="text-[var(--primary-01)]">Identify</p>
                 </div>
                 <button>
                     <AiOutlineMenu className="text-3xl text-[var(--primary-01)]"/>
