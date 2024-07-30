@@ -4,6 +4,7 @@ import DetailPage from "./pages/DetailPage";
 import ScanPage from "./pages/ScanPage";
 import NotFound from "./pages/NotFound";
 import NotSupported from "./components/NotSupported";
+import OfflinePage from "./components/OfflinePage";
 import { GlobalContext } from "./context";
 import { Error } from "./components/dialogs";
 import { openDialog } from "./components/actions"
@@ -12,6 +13,7 @@ function App() {
     const API_URL = "https://qr-pay-server.onrender.com";
     //const API_URL = "http://localhost:8080";
     const [isSupported,setIsSupported]=useState(true);
+    const [isOnline,setIsOnline]=useState(navigator.onLine);
     const [details,setDetails]=useState({
         type:"",
         fullName:"",
@@ -37,6 +39,13 @@ function App() {
             message
         })
         openDialog("error_dialog")
+    }
+
+    function connectionStatus(){
+        if(navigator.onLine===false){
+            setIsOnline(false)
+            showErrorDialog("Error","You are offline")
+        }
     }
 
     async function authenticate(isScanned:boolean,registration_number:string) {
@@ -81,20 +90,27 @@ function App() {
 
     useEffect(()=>{
         screen.width>450?setIsSupported(false):setIsSupported(true)
-    },[screen.width])
+        connectionStatus()
+    },[screen.width,isOnline])
   return (
     <>
         {isSupported?(
-            <BrowserRouter>
-            <GlobalContext.Provider value={{ details, API_URL, authenticate, showErrorDialog }}>
-                <Routes>
-                    <Route path="/" element={<ScanPage/>}/>
-                    <Route path="/details" element={isScanned?<DetailPage/>:<Navigate to="/"/>}/>
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </GlobalContext.Provider>
-            <Error data={error}/>
-            </BrowserRouter>
+            <>
+                {isOnline?(
+                    <BrowserRouter>
+                        <GlobalContext.Provider value={{ details, API_URL, authenticate, showErrorDialog }}>
+                            <Routes>
+                                <Route path="/" element={<ScanPage/>}/>
+                                <Route path="/details" element={isScanned?<DetailPage/>:<Navigate to="/"/>}/>
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </GlobalContext.Provider>
+                        <Error data={error}/>
+                    </BrowserRouter>
+                ):(
+                    <OfflinePage/>
+                )}
+            </>
         ):(
             <NotSupported/>    
         )}
