@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+  font-family: "Inter";
+  src: url(/Inter/Inter-VariableFont_slnt\,wght.ttf);
+}
+:root {
+  font-family: "Inter";
+  line-height: 1.5;
+  font-weight: 400;
+  scroll-behavior: smooth;
+
+  font-size: 15px;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light dark;
+
+ --primary-01:light-dark(#ffff,#252525);
+ --primary-02:light-dark(#252525,#ffff);
+ --primary-03:light-dark(#556761,#8da99f);
+
+ --button-bg-01:light-dark(#1A3636,#75f5ac);
+  
+ background: var(--primary-01);
+}
+
+.block {display: block;}
+.none{display: none;}
+
+@supports(backdrop-filter: blur(4rem)){
+    .blur-effect{
+        background: hsl(0 0% 100% / 0.3);
+        backdrop-filter: blur(4rem);
+    }
+}

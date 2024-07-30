@@ -1,0 +1,9 @@
+{
+    "name":"QR-PAY",
+    "short_name":"QR-PAY",
+    "description":"QR-PAY is a networking program for file sharing.",
+    "display":"fullscreen",
+    "orientation":"portrait",
+    "start_url":"/",
+    "icons":[]
+} 
