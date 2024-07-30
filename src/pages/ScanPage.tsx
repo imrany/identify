@@ -8,8 +8,8 @@ export default function ScanPage(){
         result.forEach((i:any)=>{
             if(i.format.includes("qr_code")){
                 console.log(i.rawValue)
-                if(i.rawValue.id){
-                    authenticate(true,i.rawValue.id)
+                if(i.rawValue.registration_number){
+                    authenticate(true,i.rawValue.registration_number)
                 }else{
                     let errorMessage=`You are not authorized!`
                     showErrorDialog("Error",errorMessage)

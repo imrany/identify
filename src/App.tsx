@@ -39,9 +39,9 @@ function App() {
         openDialog("error_dialog")
     }
 
-    async function authenticate(isScanned:boolean,id:string) {
+    async function authenticate(isScanned:boolean,registration_number:string) {
         try {
-            const url=isScanned?`${API_URL}/api/authenticate/${id}`:"";
+            const url=isScanned?`${API_URL}/api/identify/${registration_number}`:"";
             const response=await fetch(url,{
                 method:"GET"
             })
