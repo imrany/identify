@@ -11,6 +11,7 @@ import { openDialog } from "./components/actions"
 function App() {
     const API_URL = "https://qr-pay-server.onrender.com";
     //const API_URL = "http://localhost:8080";
+    const [isSupported,setIsSupported]=useState(true);
     const [details,setDetails]=useState({
         type:"",
         fullName:"",
@@ -40,7 +41,7 @@ function App() {
 
     async function authenticate(isScanned:boolean,id:string) {
         try {
-            const url=isScanned?`${API_URL}/api/authenticate/${id}`:null;
+            const url=isScanned?`${API_URL}/api/authenticate/${id}`:"";
             const response=await fetch(url,{
                 method:"GET"
             })
@@ -50,7 +51,16 @@ function App() {
                 setIsScanned(false);
             } else {
                 const userDetails = {
-                    username:parseRes.data.username,
+                    type:parseRes.data.type,
+                    fullName:parseRes.data.full_name,
+                    RegistrationNumber:parseRes.data.registration_number,
+                    IdNumber:parseRes.data.id_number,
+                    yearOfEntry:parseRes.data.year_of_entry,
+                    yearOfExit:parseRes.data.year_of_exit,
+                    AcademicYear:parseRes.data.academic_year,
+                    Semester:parseRes.data.semester,
+                    campus:parseRes.data.campus,
+                    course:parseRes.data.course,
                     phoneNumber:parseRes.data.phone_number
                 }
                 setDetails(userDetails);
@@ -73,12 +83,12 @@ function App() {
     },[screen.width])
   return (
     <>
-        {isSupported(
+        {isSupported?(
             <BrowserRouter>
-            <GlobalContext.Provider value={{ details, API_URL }}>
+            <GlobalContext.Provider value={{ details, API_URL, authenticate, showErrorDialog }}>
                 <Routes>
                     <Route path="/" element={<ScanPage/>}/>
-                    <Route path="/details/:id" element={isScanned?<DetailPage/>:<Navigate to="/"/>}/>
+                    <Route path="/details" element={isScanned?<DetailPage/>:<Navigate to="/"/>}/>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </GlobalContext.Provider>

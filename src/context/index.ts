@@ -14,7 +14,9 @@ type ContextType={
         course:string,
         phoneNumber:number
     },
-    API_URL:string
+    API_URL:string,
+    authenticate:any,
+    showErrorDialog:any
 }
 export const GlobalContext=createContext<ContextType>({
     details:{
@@ -30,5 +32,7 @@ export const GlobalContext=createContext<ContextType>({
         course:"",
         phoneNumber:0,
     },
-    API_URL:""
+    API_URL:"",
+    authenticate:()=>{},
+    showErrorDialog:()=>{}
 })
