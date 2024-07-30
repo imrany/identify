@@ -22,10 +22,10 @@ export default function ScanPage(){
         })
     }
     return(
-        <div className="flex flex-col justify-center items-center bg-[var(--primary-01)]">
+        <div className="flex flex-col justify-center items-center max-h-screen bg-[var(--primary-01)]">
             <Scanner
                 //allowMultiple={true}
-                classNames={{container:"h-screen",video:"h-screen"}} 
+                classNames={{container:"my-[23vh]"}} 
                 onScan={(result) => handleScan(result)} 
             />
         </div>
