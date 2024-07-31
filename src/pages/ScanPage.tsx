@@ -1,19 +1,26 @@
 import { Scanner } from '@yudiel/react-qr-scanner';
 import { GlobalContext } from "../context";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ScanPage(){
     const { authenticate, showErrorDialog }=useContext(GlobalContext);
+    const navigate=useNavigate()
     function handleScan(result:any){
         result.forEach((i:any)=>{
             if(i.format.includes("qr_code")){
-                const value=JSON.parse(i.rawValue)
-                console.log(value)
-                if(value.registration_number){
-                    authenticate(true,value.registration_number)
-                }else{
-                    let errorMessage=`You are not authorized!`
-                    showErrorDialog("Error",errorMessage)
+                try{
+                    const value=JSON.parse(i.rawValue)
+                    console.log(value)
+                    if(value.registration_number){
+                        authenticate(true,value.registration_number)
+                        navigate("/details")
+                    }else{
+                        let errorMessage=`You are not authorized!`
+                        showErrorDialog("Error",errorMessage)
+                    }
+                }catch(error:any){
+                    showErrorDialog("Error",`Invalid qr code!`)
                 }
             }else{
                 let errorMessage=`${i.format} is not supported`
@@ -27,7 +34,8 @@ export default function ScanPage(){
             <Scanner
                 allowMultiple={true}
                 classNames={{container:"my-[23vh]"}} 
-                onScan={(result) => handleScan(result)} 
+                onScan={(result) => handleScan(result)}
+                scanDelay={1500}
             />
         </div>
     )

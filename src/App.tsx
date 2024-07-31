@@ -10,19 +10,19 @@ import { Error } from "./components/dialogs";
 import { openDialog } from "./components/actions"
 
 function App() {
-    const API_URL = "https://qr-pay-server.onrender.com";
-    //const API_URL = "http://localhost:8080";
+    //const API_URL = "https://qr-pay-server.onrender.com";
+    const API_URL = "http://localhost:8080";
     const [isSupported,setIsSupported]=useState(true);
     const [isOnline,setIsOnline]=useState(navigator.onLine);
     const [details,setDetails]=useState({
         type:"",
         fullName:"",
-        RegistrationNumber:"",
-        IdNumber:"",
+        registrationNumber:"",
+        idNumber:"",
         yearOfEntry:"",
         yearOfExit:"",
         AcademicYear:"",
-        Semester:0,
+        semester:0,
         campus:"",
         course:"",
         phoneNumber:0,
@@ -69,20 +69,20 @@ function App() {
                 showErrorDialog("Error",parseRes.error)
             } else {
                 const userDetails = {
-
                     type:parseRes.data.type,
                     fullName:parseRes.data.full_name,
-                    RegistrationNumber:parseRes.data.registration_number,
-                    IdNumber:parseRes.data.id_number,
+                    registrationNumber:parseRes.data.registration_number,
+                    idNumber:parseRes.data.id_number,
                     yearOfEntry:parseRes.data.year_of_entry,
                     yearOfExit:parseRes.data.year_of_exit,
-                    AcademicYear:parseRes.data.academic_year,
-                    Semester:parseRes.data.semester,
+                    academicYear:parseRes.data.academic_year,
+                    semester:parseRes.data.semester,
                     campus:parseRes.data.campus,
                     course:parseRes.data.course,
                     phoneNumber:parseRes.data.phone_number
                 }
-                setDetails(userDetails);
+                setDetails(details=>userDetails);
+                console.log(details)
                 setIsScanned(true);
             }
         }catch(error:any){
