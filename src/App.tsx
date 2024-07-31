@@ -50,9 +50,17 @@ function App() {
 
     async function authenticate(isScanned:boolean,registration_number:string) {
         try {
-            const url=isScanned?`${API_URL}/api/identify/${registration_number}`:"";
+            let date=new Date;
+            const url=isScanned?`${API_URL}/api/identify`:"";
             const response=await fetch(url,{
-                method:"GET"
+                method:"POST",
+                headers:{
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({
+                    access_time:date,
+                    registration_number:registration_number
+                })
             })
             const parseRes = await response.json();
             if (parseRes.error) {
@@ -61,6 +69,7 @@ function App() {
                 showErrorDialog("Error",parseRes.error)
             } else {
                 const userDetails = {
+
                     type:parseRes.data.type,
                     fullName:parseRes.data.full_name,
                     RegistrationNumber:parseRes.data.registration_number,
