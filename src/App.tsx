@@ -25,6 +25,7 @@ function App() {
         semester:0,
         campus:"",
         course:"",
+        school:"",
         phoneNumber:0,
     })
     const [isScanned,setIsScanned]=useState(false);
@@ -79,7 +80,8 @@ function App() {
                     semester:parseRes.data.semester,
                     campus:parseRes.data.campus,
                     course:parseRes.data.course,
-                    phoneNumber:parseRes.data.phone_number
+                    phoneNumber:parseRes.data.phone_number,
+                    school:parseRes.data.school,
                 }
                 setDetails(details=>userDetails);
                 console.log(details)

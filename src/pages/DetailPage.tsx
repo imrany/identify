@@ -17,14 +17,14 @@ export default function DetailPage(){
                 <img src={Cactus} className="rounded-[20px] object-fit h-[120px] w-[120px]" alt="Student's image"/>
                 <div className="flex-grow flex flex-col gap-3 h-full">
                     <div>
-                        <p className="text-xl font-semibold max-w-[200px]">Imran Matano Ngati</p>
-                        <p className="text-sm text-[var(--primary-03)]">Bachelor of computer science</p>
-                        <p className="text-sm text-[var(--primary-03)]">CSC/034/2021</p>
-                        <p className="text-sm text-[var(--primary-03)]">SSAE</p>
+                        <p className="text-xl font-semibold max-w-[200px]">{details.fullName}</p>
+                        <p className="text-sm text-[var(--primary-03)]">{details.course}</p>
+                        <p className="text-sm text-[var(--primary-03)]">{details.registrationNumber}</p>
+                        <p className="text-sm text-[var(--primary-03)]">{details.school}</p>
                     </div>
                     <div className="text-base text-[var(--button-bg-01)] items-center flex gap-2">
                         <PiStudentBold className=""/>
-                        <p>student</p>
+                        <p>{details.type}</p>
                     </div>
                 </div>
             </div>
