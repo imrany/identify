@@ -21,7 +21,7 @@ function App() {
         idNumber:"",
         yearOfEntry:"",
         yearOfExit:"",
-        AcademicYear:"",
+        academicYear:"",
         semester:0,
         campus:"",
         course:"",
@@ -83,7 +83,7 @@ function App() {
                     phoneNumber:parseRes.data.phone_number,
                     school:parseRes.data.school,
                 }
-                setDetails(details=>userDetails);
+                setDetails(userDetails);
                 console.log(details)
                 setIsScanned(true);
             }
