@@ -85,7 +85,7 @@ function App() {
                 }
                 setDetails(prevState => ({
                     ...prevState,
-                    userDetails
+                    ...userDetails
                 }));
                 console.log(details)
                 setIsScanned(true);
