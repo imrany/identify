@@ -1,6 +1,6 @@
 import { GlobalContext } from "../context";
 import { useContext } from "react";
-import Cactus from "../assets/cactus.png"; 
+import User from "../assets/user.png"; 
 import { PiStudentBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ export default function DetailPage(){
                 <p>Access granted</p>
             </div>
             <div className="flex justify-center gap-4 mt-6 h-[120px]">
-                <img src={Cactus} className="rounded-[20px] object-fit h-[120px] w-[120px]" alt="Student's image"/>
+                <img src={User} className="rounded-[20px] object-fit h-[120px] w-[120px]" alt="Student's image"/>
                 <div className="flex-grow flex flex-col gap-3 h-full">
                     <div>
                         <p className="text-xl font-semibold max-w-[200px] capitalize">{details.fullName}</p>
