@@ -83,7 +83,10 @@ function App() {
                     phoneNumber:parseRes.data.phone_number,
                     school:parseRes.data.school,
                 }
-                setDetails(userDetails);
+                setDetails(prevState => ({
+                    ...prevState,
+                    userDetails
+                }));
                 console.log(details)
                 setIsScanned(true);
             }
