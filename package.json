@@ -1,6 +1,6 @@
 {
-  "name": "qr-pay",
-  "description": "A qr code payment gateway for retailers",
+  "name": "identify",
+  "description": "Give and track access by scanning user qr codeo their ID cards",
   "private": true,
   "version": "0.0.1",
   "type": "module",
