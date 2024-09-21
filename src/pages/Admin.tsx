@@ -24,8 +24,16 @@ export default function Admin(){
             if(parseRes.error){
                 showErrorDialog("Error",`${parseRes.error}`)
             }else{
-                console.log(parseRes.data)
-                setAccessRecord(parseRes.data)
+                let sorted=parseRes.data
+                sorted.sort((a,b)=>{
+                    let x = b.access_time.toLowerCase();
+                    let y = a.access_time.toLowerCase();
+                    if (x < y) {return -1;}
+                    if (x > y) {return 1;}
+                    return 0;
+                })
+                console.log(sorted)
+                setAccessRecord(sorted)
             }
         }catch(error:any){
             showErrorDialog("Error",`${error.message}`)
