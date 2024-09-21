@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DetailPage from "./pages/DetailPage";
 import ScanPage from "./pages/ScanPage";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import NotSupported from "./components/NotSupported";
 import OfflinePage from "./components/OfflinePage";
@@ -10,8 +11,8 @@ import { Error } from "./components/dialogs";
 import { openDialog } from "./components/actions"
 
 function App() {
-    const API_URL = "https://qr-pay-server.onrender.com";
-    //const API_URL = "http://localhost:8080";
+    //const API_URL = "https://qr-pay-server.onrender.com";
+    const API_URL = "http://localhost:8080";
     const [isSupported,setIsSupported]=useState(true);
     const [isOnline,setIsOnline]=useState(navigator.onLine);
     const [details,setDetails]=useState({
@@ -116,6 +117,7 @@ function App() {
                             <Routes>
                                 <Route path="/" element={<ScanPage/>}/>
                                 <Route path="/details" element={isScanned?<DetailPage/>:<Navigate to="/"/>}/>
+                                <Route path="/admin" element={<Admin/>}/>
                                 <Route path="*" element={<NotFound />} />
                             </Routes>
                         </GlobalContext.Provider>
