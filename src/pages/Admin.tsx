@@ -25,7 +25,7 @@ export default function Admin(){
                 showErrorDialog("Error",`${parseRes.error}`)
             }else{
                 let sorted=parseRes.data
-                sorted.sort((a,b)=>{
+                sorted.sort((a:any,b:any)=>{
                     let x = b.access_time.toLowerCase();
                     let y = a.access_time.toLowerCase();
                     if (x < y) {return -1;}
