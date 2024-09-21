@@ -1,9 +1,14 @@
 import { GlobalContext } from "../context";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa";
+import User from "../assets/user.png"; 
 
 export default function Admin(){
+    const navigate=useNavigate()
     const { API_URL, showErrorDialog }=useContext(GlobalContext);
+    const [accessRecord,setAccessRecord]=useState([])
+    const [reload,setReload]=useState(0)
 
     function formattedDate(dateString:string){
         return new Date(dateString).toLocaleString('en-US',{
@@ -20,24 +25,49 @@ export default function Admin(){
                 showErrorDialog("Error",`${parseRes.error}`)
             }else{
                 console.log(parseRes.data)
-                console.log(formattedDate(parseRes.data[4].access_time))
+                setAccessRecord(parseRes.data)
             }
         }catch(error:any){
             showErrorDialog("Error",`${error.message}`)
             console.log(error.message)
         }
     }
-    
+   
+    setInterval(()=>{
+        setReload(reload=>reload+1)
+    },500)
+
     useEffect(()=>{
         trackAccess()
-    },[])
+    },[reload])
     return(
         <div className="flex flex-col p-3 max-h-screen bg-[var(--primary-01)]">
-            <div className="flex px-2 justify-center items-center">
-                <FaChevronLeft className="w-[15px] h-[15px]"/>
-                <p className="text-base ml-auto">Access records</p>
-            </div>
-            Admin
+            {accessRecord.length!==0?(
+                <>
+                    <div className="flex justify-center items-center px-2">
+                        <FaChevronLeft onClick={()=>navigate(-1)} className="w-[18px] h-[18px]"/>
+                        <p className="text-lg ml-auto">Access record</p>
+                    </div>
+                    <div className="pb-3 pt-12">
+                        <p className="text-xl font-semibold mx-2">{accessRecord.length} access</p>
+                        <div className="flex flex-col mt-2">
+                            {accessRecord&&accessRecord.map((access:any, index:any)=>(
+                                <div key={index} className="flex h-[70px] items-center gap-2 p-2">
+                                    <img src={User} className="rounded-[20px] object-fit h-[50px] w-[50px]" alt="Student's image"/>
+                                    <div className="flex-grow flex flex-col gap-1">
+                                        <p className="font-semibold">{access.registration_number}</p>
+                                        <p className="text-sm text-[var(--primary-03)] uppercase">{formattedDate(access.access_time)}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </>
+            ):(
+                <div className="h-screen flex items-center justify-center">
+                    <p>No access record</p>
+                </div>
+            )}
         </div>
     )
 }
