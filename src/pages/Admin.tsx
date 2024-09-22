@@ -33,7 +33,7 @@ export default function Admin(){
                     if (x > y) {return 1;}
                     return 0;
                 })
-                new Audio(BellNotification).play()
+                sorted.length!==accessRecord.length?new Audio(BellNotification).play():""
                 console.log(sorted)
                 setAccessRecord(sorted)
             }
