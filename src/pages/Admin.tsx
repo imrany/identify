@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa";
 import User from "../assets/user.png"; 
+import BellNotification from "../assets/sounds/bell-notification.wav"; 
 
 export default function Admin(){
     const navigate=useNavigate()
@@ -32,6 +33,7 @@ export default function Admin(){
                     if (x > y) {return 1;}
                     return 0;
                 })
+                new Audio(BellNotification).play()
                 console.log(sorted)
                 setAccessRecord(sorted)
             }
