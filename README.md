@@ -1,30 +1,14 @@
-# React + TypeScript + Vite
+### Identify
+<sub>
+An identification system implemented by scanning Qr code on user ID card 📑.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+We've created a Qr code identification system that would enable institutions/organizations track and provide authorized access on essential/critical facilities to their staff.
 
-Currently, two official plugins are available:
+This system is based on a `Qr code` scanner that scan a unique `Qr code` on a staff ID card, and also keeps track of access.
+</sub>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+### Qr code gen content format
+While generating the `Qr code` use this content
+```json
+{registration_number: 'CSC/000/2021'}
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
