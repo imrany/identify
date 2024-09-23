@@ -1,6 +1,6 @@
 import { Scanner } from '@yudiel/react-qr-scanner';
 import { GlobalContext } from "../context";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ScanPage(){
