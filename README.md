@@ -10,5 +10,5 @@ This system is based on a `Qr code` scanner that scan a unique `Qr code` on a st
 ### Qr code gen content format
 While generating the `Qr code` use this content
 ```json
-{registration_number: 'CSC/000/2021'}
+{"registration_number":"CSC/000/2021"}
 ```
