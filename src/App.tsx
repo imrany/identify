@@ -100,11 +100,11 @@ function App() {
     }
 
     window.onresize=function(){
-        screen.width>450?setIsSupported(false):setIsSupported(true)
+        screen.width>1080?setIsSupported(false):setIsSupported(true)
     }
 
     useEffect(()=>{
-        screen.width>450?setIsSupported(false):setIsSupported(true)
+        screen.width>1080?setIsSupported(false):setIsSupported(true)
         connectionStatus()
     },[screen.width,isOnline])
   return (
