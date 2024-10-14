@@ -11,23 +11,11 @@ import { Error } from "./components/dialogs";
 import { openDialog } from "./components/actions"
 
 function App() {
-    const API_URL = "https://qr-pay-server.onrender.com";
-    //const API_URL = "http://localhost:8080";
+    //const API_URL = "https://qr-pay-server.onrender.com";
+    const API_URL = "http://127.0.0.1:5000";
     const [isSupported,setIsSupported]=useState(true);
     const [isOnline,setIsOnline]=useState(navigator.onLine);
     const [details,setDetails]=useState({
-        type:"",
-        fullName:"",
-        registrationNumber:"",
-        idNumber:"",
-        yearOfEntry:"",
-        yearOfExit:"",
-        academicYear:"",
-        semester:0,
-        campus:"",
-        course:"",
-        school:"",
-        phoneNumber:0,
     })
     const [isScanned,setIsScanned]=useState(false);
     const [error,setError]=useState({
@@ -50,57 +38,34 @@ function App() {
         }
     }
 
-    async function authenticate(isScanned:boolean,registration_number:string) {
-        try {
-            let date=new Date;
-            const url=isScanned?`${API_URL}/api/identify`:"";
+    
+    window.onresize=function(){
+        screen.width>1080?setIsSupported(false):setIsSupported(true)
+    }
+
+    async function sendPhoto(blob:any){
+        try{
+            const url=`${API_URL}/submit`
+            const formData = new FormData();
+            formData.append('file', blob, 'upload_image.png');
+
             const response=await fetch(url,{
                 method:"POST",
-                headers:{
-                    "content-type":"application/json"
-                },
-                body:JSON.stringify({
-                    access_time:date,
-                    registration_number:registration_number
-                })
+                body:formData
             })
-            const parseRes = await response.json();
-            if (parseRes.error) {
-                console.log(parseRes.error)
-                setIsScanned(false);
-                showErrorDialog("Error",parseRes.error)
-            } else {
-                const userDetails = {
-                    type:parseRes.data.type,
-                    fullName:parseRes.data.full_name,
-                    registrationNumber:parseRes.data.registration_number,
-                    idNumber:parseRes.data.id_number,
-                    yearOfEntry:parseRes.data.year_of_entry,
-                    yearOfExit:parseRes.data.year_of_exit,
-                    academicYear:parseRes.data.academic_year,
-                    semester:parseRes.data.semester,
-                    campus:parseRes.data.campus,
-                    course:parseRes.data.course,
-                    phoneNumber:parseRes.data.phone_number,
-                    school:parseRes.data.school,
-                }
-                setDetails(prevState => ({
-                    ...prevState,
-                    ...userDetails
-                }));
-                console.log(details)
-                setIsScanned(true);
+            const parseRes=await response.json()
+            if(parseRes.error){
+                console.error(parseRes.error)
+            }else{
+                console.log(parseRes)
+                setDetails(parseRes.data)
+                setIsScanned(true)
             }
         }catch(error:any){
-            setIsScanned(false);
-            let errorMessage=error.message.includes("Failed to fetch")?"No connection":error.message
+            let errorMessage=`${error.message}.`
             showErrorDialog("Error",errorMessage)
             console.log(errorMessage)
         }
-    }
-
-    window.onresize=function(){
-        screen.width>1080?setIsSupported(false):setIsSupported(true)
     }
 
     useEffect(()=>{
@@ -113,7 +78,7 @@ function App() {
             <>
                 {isOnline?(
                     <BrowserRouter>
-                        <GlobalContext.Provider value={{ details, API_URL, authenticate, showErrorDialog }}>
+                        <GlobalContext.Provider value={{ details, API_URL, sendPhoto, showErrorDialog }}>
                             <Routes>
                                 <Route path="/" element={<ScanPage/>}/>
                                 <Route path="/details" element={isScanned?<DetailPage/>:<Navigate to="/"/>}/>

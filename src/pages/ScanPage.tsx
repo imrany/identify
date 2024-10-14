@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ScanPage(){
-    const { authenticate, showErrorDialog }=useContext(GlobalContext);
+    const { sendPhoto, showErrorDialog }=useContext(GlobalContext);
     const [isVideo,SetIsVideo]=useState(true)
     const [error,setError]=useState("")
     const navigate=useNavigate()
@@ -20,10 +20,11 @@ export default function ScanPage(){
                 const canvas = document.querySelector('#canvas')
                 const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
                 video.srcObject = videoStream
-                canvas.getContext('2d').drawImage(video, 0, 0, canva.width, canvas.height)
-                const image_data_url=canvas.toDataURL('image/jpeg')
+                canvas.getContext('2d').drawImage(video, 0, 0, 224, 224)
                 setInterval(()=>{
-                    sendPhoto(image_data_url)
+                    canvas.toBlob((blob:any)=>{
+                        sendPhoto(blob)
+                    },'image/png')
                 },5000)
             }catch(error:any){
                 console.log(error)
@@ -34,31 +35,7 @@ export default function ScanPage(){
         }
     }
 
-    async function sendPhoto(image_data_url:any){
-        try{
-            const url=`/submit`
-            //Remove 'data:image/png;base64,' from the data url
-            const base64Data=image_data_url.split(',')[1]
-            const response=await fetch(url,{
-                method:"POST",
-                body:JSON.stringify({image:base64Data}),
-                headers:{
-                    "content-type":"application/json"
-                }
-            })
-            const parseRes=await response.json()
-            if(parseRes.error){
-                console.error(parseRes.error)
-            }else{
-                console.log(parseRes)
-            }
-        }catch(error:any){
-            let errorMessage=`${error.message}.`
-            showErrorDialog("Error",errorMessage)
-            console.log(errorMessage)
-        }
-    }
-
+    
     useEffect(()=>{
         startRecording()
     },[])
@@ -66,8 +43,8 @@ export default function ScanPage(){
         <>
         {isVideo?(
             <div className="flex flex-col justify-center items-center h-screen bg-[#252525]">
-                <canvas height={740} id="canvas" style={{display:"none"}}></canvas>
-                <video height={740} autoPlay id="video">/video>
+                <video height={240} autoPlay id="video"></video>
+                <canvas height={240} id="canvas" style={{display:"none"}}></canvas>
             </div>
         ):(
             <div className="flex flex-col justify-center items-center h-screen bg-[var(--primary-01)]">

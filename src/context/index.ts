@@ -1,40 +1,14 @@
 import { createContext } from 'react'
 
 type ContextType={
-    details:{
-        type:string,
-        fullName:string,
-        registrationNumber:string,
-        idNumber:string,
-        yearOfEntry:string,
-        yearOfExit:string,
-        academicYear:string,
-        semester:number,
-        campus:string,
-        course:string,
-        phoneNumber:number,
-        school:string
-    },
+    details:any,
     API_URL:string,
-    authenticate:any,
+    sendPhoto:any,
     showErrorDialog:any
 }
 export const GlobalContext=createContext<ContextType>({
-    details:{
-        type:"",
-        fullName:"",
-        registrationNumber:"",
-        idNumber:"",
-        yearOfEntry:"",
-        yearOfExit:"",
-        school:"",
-        academicYear:"",
-        semester:0,
-        campus:"",
-        course:"",
-        phoneNumber:0,
-    },
+    details:{},
     API_URL:"",
-    authenticate:()=>{},
+    sendPhoto:()=>{},
     showErrorDialog:()=>{}
 })
